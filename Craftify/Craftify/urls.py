@@ -25,4 +25,11 @@ urlpatterns = [
     path('contact/', views.contact),
     path('userRegister/', views.userRegister),
     path('artistRegister/', views.artistRegister),
+    path('payFees/', views.payFees),
+    path('adminViewArtist/', views.adminViewArtist),
+    path('artistHome/', views.artistHome),
+    path('userHome/', views.userHome),
+    path('adminHome/', views.adminHome),
+    path('manageRequest/', views.manageRequest),
+    path('logout/', views.logout),
 ]
