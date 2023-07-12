@@ -60,13 +60,6 @@ def artistRegister(request):
                 artistReg.save()
                 messages.success(request,"Registration Successfull")
                 return redirect("/signin")
-        #skills = request.POST.getlist("skills")  # Retrieve the submitted skills value
-        # skills_list = [skill.strip() for skill in skills.split(",") if skill.strip()]  # Split the skills string into a list
-        # print(skills_list)
-        # print(skills)
-        # print(images)
-        # print( "# Retrieve the submitted skills value")
-        # print(images)
     return render(request, "COMMON/artistRegister.html")
 
 def signin(request):
