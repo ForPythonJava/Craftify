@@ -69,7 +69,7 @@
 
     <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
         <div class="container">
-            <a class="navbar-brand" href="/">Craftify </a>
+            <a class="navbar-brand" href="/userHome">Craftify </a>
             <div class="order-lg-last btn-group">
                 <!-- <a href="#" class="btn-cart dropdown-toggle dropdown-toggle-split" data-toggle="dropdown"
 					aria-haspopup="true" aria-expanded="false">
@@ -267,7 +267,54 @@
             </div>
         </div>
     </section>
-
+    {% if common_products %}
+    <section class="ftco-section">
+        <div class="container">
+            <div class="row justify-content-center pb-5">
+                <div class="col-md-7 heading-section text-center ftco-animate">
+                    <span class="subheading">Our Delightful offerings</span>
+                    <h2>Recommended Products</h2>
+                </div>
+            </div>
+            <div class="row">
+                {% for i in common_products %}
+                <div class="col-md-3 d-flex">
+                    <div class="product ftco-animate">
+                        <div class="img d-flex align-items-center justify-content-center"
+                            style="background-image: url(/static/media/{{i.image}});">
+                            <div class="desc">
+                                <p class="meta-prod d-flex">
+                                    <!-- <a href="#" class="d-flex align-items-center justify-content-center"><span
+                                            class="flaticon-shopping-bag"></span></a>
+                                    <a href="#" class="d-flex align-items-center justify-content-center"><span
+                                            class="flaticon-heart"></span></a>
+                                    <a href="#" class="d-flex align-items-center justify-content-center"><span
+                                            class="flaticon-visibility"></span></a> -->
+                                </p>
+                            </div>
+                        </div>
+                        <div class="text text-center">
+                            <span class="sale">Sale</span>
+                            <span class="category">{{i.category}}</span>
+                            <h2>{{i.name}}</h2>
+                            <p style="font-size: 12px;font-weight: bold;" class="text-danger">{{i.desc}}</p>
+                            <p class="mb-0"><span class="price">&#x20B9; {{i.price}}</span></p>
+                            <form action="/addToCart/" method="post">
+                                {% csrf_token %}
+                                <input type="number" max="{{i.qty}}" min="1" value="1" id="custom-width"
+                                    class="border mb-2 text-center" placeholder="Enter Quantity" name="qty"
+                                    required><br>
+                                <input type="hidden" value="{{i.id}}" name="pid">
+                                <input type="hidden" value="{{i.price}}" name="price">
+                                <input type="submit" class="btn btn-primary" value="Add To Cart">
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+    </section>
+    {% endif %}
 
     <section class="ftco-section testimony-section img" style="background-image: url(../static/images/bg_4.jpg);">
         <div class="overlay"></div>

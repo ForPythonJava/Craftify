@@ -6,6 +6,7 @@ from django.contrib import messages
 from datetime import datetime, date
 from django.core.mail import send_mail
 
+
 # Create your views here.
 
 
@@ -320,9 +321,17 @@ def updateProduct(request):
         updateProduct.save()
         messages.success(request, "Details Updated")
         return redirect("/viewItems")
-    return render(
-        request, "ARTIST/updateProduct.html", {"pdtData": pdtData, "category": options}
-    )
+    return render(request, "ARTIST/updateProduct.html", {"pdtData": pdtData, "category": options})
+    
+def viewRating(request):
+    uid=request.session['uid']
+    pdtData = Products.objects.filter(artistId__loginid=uid)
+    rating = Feedback.objects.filter(oid__pid__artistId__loginid_id=uid)
+    print(rating)
+    combined_data = zip(pdtData, rating)
+    merged_query = list(combined_data)
+    print("MERGED",merged_query)
+    return render(request,"ARTIST/viewratings.html",{"data":merged_query})
 
 
 ######################################################--ADMIN--#########################################################
@@ -372,7 +381,12 @@ def deleteProduct(request):
 
 ######################################################--USER--#########################################################
 def userHome(request):
-    return render(request, "USER/userHome.html")
+    uid = request.session['uid']
+    matching_categories = Cart.objects.filter(uid__loginid=uid).values_list('pid__category', flat=True).distinct()
+    print(matching_categories)
+
+    common_products = Products.objects.filter(category__in=matching_categories)
+    return render(request, "USER/userHome.html",{"common_products":common_products})
 
 
 def userViewProduct(request):
@@ -478,6 +492,7 @@ def viewOrders(request):
     print(fdbkData)
     id_list = fdbkData.values_list("oid__pid", flat=True)
     print(id_list)
+    
     return render(
         request, "USER/viewOrders.html", {"orderData": orderData, "id_list": id_list}
     )
@@ -525,9 +540,38 @@ def addFeedback(request):
     return render(request, "USER/addFeedback.html")
 
 
+def addAddress(request):
+    id=request.GET.get("id")
+    if id:
+        if request.POST:
+            name=request.POST['name']
+            email=request.POST['email']
+            state=request.POST['state']
+            pincode=request.POST['pincode']
+            address=request.POST['address']
+            updateAddress=Cart.objects.filter(id=id).update(name=name,email=email,state=state,pincode=pincode,address=address)
+            return redirect("/paymentForm?id="+id)
+    else:
+        uid = request.session["uid"]
+        myCart = Cart.objects.filter(Q(uid_id__loginid__id=uid) & Q(status="InCart"))
+        id_list = myCart.values_list("id", flat=True)
+        if request.POST:
+            name=request.POST['name']
+            email=request.POST['email']
+            state=request.POST['state']
+            pincode=request.POST['pincode']
+            address=request.POST['address']
+            for i in id_list:
+                updateStatus = Cart.objects.filter(id=i).update(name=name,email=email,state=state,pincode=pincode,address=address)
+            return redirect("/checkOut")
+    return render(request,"USER/addAddress.html")
+
+########################################### Chat Section###########################################
+
 def chat(request):
     uid = request.session["uid"]
     # Artists
+    name=""
     artistData = Artist.objects.all()
     id = request.GET.get("id")
     getChatData = Chat.objects.filter(Q(uid__loginid=uid) & Q(artistid=id))
@@ -536,9 +580,30 @@ def chat(request):
     userid = User.objects.get(loginid__id=uid)
     if id:
         artistid = Artist.objects.get(id=id)
-        print(artistid.name)
+        name=artistid.name
     if request.POST:
         message = request.POST["message"]
         sendMsg = Chat.objects.create(uid=userid,message=message,artistid=artistid,time=formatted_time,utype="USER")
         sendMsg.save()
-    return render(request,"USER/chat.html",{"artistData": artistData, "getChatData": getChatData,"artistid":artistid.name})
+    return render(request,"USER/chat.html",{"artistData": artistData, "getChatData": getChatData,"artistid":name})
+
+
+def reply(request):
+    uid = request.session["uid"]
+    print(uid)
+    name=""
+    userData = User.objects.all()
+    id = request.GET.get("id")
+    getChatData = Chat.objects.filter(Q(artistid__loginid=uid) & Q(uid=id))
+    print(getChatData)
+    current_time = datetime.now().time()
+    formatted_time = current_time.strftime("%H:%M")
+    artistid = Artist.objects.get(loginid__id=uid)
+    if id:
+        userid = User.objects.get(id=id)
+        name=userid.name
+    if request.POST:
+        message = request.POST["message"]
+        sendMsg = Chat.objects.create(uid=userid,message=message,artistid=artistid,time=formatted_time,utype="ARTIST")
+        sendMsg.save()
+    return render(request,"ARTIST/chat.html",{"userData": userData, "getChatData": getChatData,"userid":name})

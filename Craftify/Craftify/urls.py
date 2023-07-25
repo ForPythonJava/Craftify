@@ -53,4 +53,7 @@ urlpatterns = [
     path('approveProduct/', views.approveProduct),
     path('deleteProduct/', views.deleteProduct),
     path('chat/', views.chat),
+    path('reply/', views.reply),
+    path('addAddress/', views.addAddress),
+    path('viewRating/', views.viewRating),
 ]

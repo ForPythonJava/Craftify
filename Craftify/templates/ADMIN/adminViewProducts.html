@@ -92,6 +92,7 @@
             var productText = $(this).text().toLowerCase();
             if (productText.includes(query)) {
                 $(this).show();
+                $("#noMatchingData").hide();
             } else {
                 $("#noMatchingData").show();
                 $(this).hide();

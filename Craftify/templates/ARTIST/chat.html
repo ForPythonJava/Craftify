@@ -443,7 +443,7 @@
 
       <!--header -->
       <div class="header">
-        <a href="/userHome" style="font-size: x-large;">
+        <a href="/artistHome" style="font-size: x-large;">
           <i class="fa fa-arrow-left" aria-hidden="true"></i>
         </a>
 
@@ -470,56 +470,62 @@
       <div class="search-container">
         <div class="input">
           <i class="fa-solid fa-magnifying-glass"></i>
-          <input type="text" placeholder="Search or start new chat   ">
+          <input type="text" id="searchInput" placeholder="Search or start new chat">
         </div>
         <i class="fa-sharp fa-solid fa-bars-filter"></i>
       </div>
 
-
       <!--chats -->
-      <div class="chat-list">
-        {% for i in artistData %}
-        <a href="/chat?id={{i.id}}" style="text-decoration: none;">
+      <div class="chat-list" id="chatList">
+        {% for i in userData %}
+        <a href="/reply?id={{i.id}}" style="text-decoration: none;">
           <div class="chat-box">
             <div class="img-box">
-              <img class="img-cover" src="/static/images/painter.png" alt="">
+              <img class="img-cover" src="/static/images/whatsapp-dp.png" alt="">
             </div>
             <div class="chat-details">
               <div class="text-head">
                 <h4>{{i.name}}</h4>
-                <p class="time unread"></p>
+                <!-- <p class="time unread">11:49</p> -->
               </div>
               <div class="text-message">
-                <p></p>
+                <p>&nbsp;</p>
                 <!-- <b></b> -->
               </div>
             </div>
+
           </div>
         </a>
         {% endfor %}
       </div>
+
+
+
     </div>
 
 
+    {% if getChatData %}
     <div class="right-container">
       <!--header -->
       <div class="header">
         <div class="img-text">
           <div class="user-img">
-            <img class="dp" src="/static/images/painter.png" alt="">
+            <img class="dp" src="/static/images/whatsapp-dp.png" alt="">
           </div>
-          <h4>{{artistid}}<br><span>Online</span></h4>
+          <h4>{{userid}}<br><span>Online</span></h4>
         </div>
         <div class="nav-icons">
           <li><i class="fa-solid fa-magnifying-glass"></i></li>
           <li><i class="fa-solid fa-ellipsis-vertical"></i></li>
         </div>
       </div>
+      {% endif %}
+      {% if getChatData %}
 
       <!--chat-container -->
       <div class="chat-container">
         {% for i in getChatData %}
-        {% if i.utype == "USER" %}
+        {% if i.utype == "ARTIST" %}
         <div class="message-box my-message">
           <p style="display: flex;flex-wrap: nowrap;">{{i.message}}
             <span style="margin-left: 5px;margin-top: 8px;">{{i.time}}</span>
@@ -532,6 +538,7 @@
         {% endif %}
         {% endfor %}
       </div>
+
       <form action="" method="post">
         {% csrf_token %}
         <!--input-bottom -->
@@ -549,8 +556,26 @@
         </div>
       </form>
     </div>
+    {% else %}
+    <div class="right-container">
+      <!--header -->
+      <div class="header">
 
+        <div class="nav-icons">
+
+        </div>
+      </div>
+      <!--chat-container -->
+      <div class="chat-container">
+      </div>
+      <form action="" method="post">
+
+      </form>
+    </div>
+    {% endif %}
   </div>
+
+
 
 
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -567,7 +592,6 @@
         var productText = $(this).text().toLowerCase();
         if (productText.includes(query)) {
           $(this).show();
-          
         } else {
           $("#noMatchingData").show();
           $(this).hide();
@@ -576,6 +600,29 @@
     }
   </script>
 
+  <!-- 
+  <script>
+    function filterChats(searchQuery) {
+      // Get all chat boxes
+      const chatBoxes = document.querySelectorAll('.chat-box');
+      // Loop through each chat box and hide/show based on search query
+      for (const chatBox of chatBoxes) {
+        const chatName = chatBox.querySelector('h4').textContent.toLowerCase();
+        // If the chat name includes the search query, show the chat box, else hide it
+        if (chatName.includes(searchQuery.toLowerCase())) {
+          chatBox.style.display = 'block';
+        } else {
+          chatBox.style.display = 'none';
+        }
+      }
+    }
+
+    // Add event listener to the search input
+    document.getElementById('searchInput').addEventListener('input', function (event) {
+      const searchQuery = event.target.value.trim();
+      filterChats(searchQuery);
+    });
+  </script> -->
 
 </body>
 

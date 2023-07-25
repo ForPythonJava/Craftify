@@ -62,6 +62,11 @@ class Cart(models.Model):
     price = models.IntegerField()
     status = models.CharField(max_length=100, default="InCart")
     date = models.DateField(auto_now=True, null=True)
+    name=models.CharField(max_length=100,null=True)
+    email=models.EmailField(max_length=100,null=True)
+    state=models.CharField(max_length=100,null=True)
+    pincode=models.IntegerField(null=True)
+    address=models.CharField(max_length=300,null=True)
 
 
 class Wishlist(models.Model):
