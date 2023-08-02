@@ -77,6 +77,7 @@
                         <a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-toggle="dropdown"
                             aria-haspopup="true" aria-expanded="false">View</a>
                         <div class="dropdown-menu" aria-labelledby="dropdown04">
+                            <a class="dropdown-item" href="/userProfile">Profile</a>
                             <a class="dropdown-item" href="/userViewProduct">Products</a>
                             <a class="dropdown-item" href="/wishList">WishList</a>
                             <a class="dropdown-item" href="/viewOrders">My Orders</a>
@@ -87,6 +88,9 @@
                     </li>
                     <li class="nav-item">
                         <a href="/chat" class="nav-link"> <i class="fa fa-commenting-o" aria-hidden="true"></i>Chat</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" onclick="scrollToDiv(event)" class="nav-link"> </i>Contact</a>
                     </li>
                     <li class="nav-item"><a href="/logout" class="nav-link">Logout</a></li>
 
@@ -101,13 +105,12 @@
 
     {% endblock %}
 
-
-    <footer class="ftco-footer">
+    <footer class="ftco-footer" id="footer">
         <div class="container">
             <div class="row mb-5">
                 <div class="col-sm-12 col-md">
                     <div class="ftco-footer-widget mb-4">
-                        <h2 class="ftco-heading-2 logo"><a href="#">CRAFTIFY</a></h2>
+                        <h2 class="ftco-heading-2 logo"><a href="#">Craftify </a></h2>
                         <p>Far far away, behind the word mountains, far from the countries.</p>
                         <ul class="ftco-footer-social list-unstyled mt-2">
                             <li class="ftco-animate"><a href="#"><span class="fa fa-twitter"></span></a></li>
@@ -120,35 +123,13 @@
                     <div class="ftco-footer-widget mb-4 ml-md-4">
                         <h2 class="ftco-heading-2">My Accounts</h2>
                         <ul class="list-unstyled">
-                            <li><a href="#"><span class="fa fa-chevron-right mr-2"></span>My Account</a></li>
-                            <li><a href="#"><span class="fa fa-chevron-right mr-2"></span>Register</a></li>
-                            <li><a href="#"><span class="fa fa-chevron-right mr-2"></span>Log In</a></li>
-                            <li><a href="#"><span class="fa fa-chevron-right mr-2"></span>My Order</a></li>
+                            <li><a href="/myProfile"><span class="fa fa-chevron-right mr-2"></span>My Account</a></li>
+                            <li><a href="/login"><span class="fa fa-chevron-right mr-2"></span>Log In</a></li>
+                            <li><a href="/viewOrders"><span class="fa fa-chevron-right mr-2"></span>My Order</a></li>
                         </ul>
                     </div>
                 </div>
-                <div class="col-sm-12 col-md">
-                    <div class="ftco-footer-widget mb-4 ml-md-4">
-                        <h2 class="ftco-heading-2">Information</h2>
-                        <ul class="list-unstyled">
-                            <li><a href="#"><span class="fa fa-chevron-right mr-2"></span>About us</a></li>
-                            <li><a href="#"><span class="fa fa-chevron-right mr-2"></span>Catalog</a></li>
-                            <li><a href="#"><span class="fa fa-chevron-right mr-2"></span>Contact us</a></li>
-                            <li><a href="#"><span class="fa fa-chevron-right mr-2"></span>Term &amp; Conditions</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-sm-12 col-md">
-                    <div class="ftco-footer-widget mb-4">
-                        <h2 class="ftco-heading-2">Quick Link</h2>
-                        <ul class="list-unstyled">
-                            <li><a href="#"><span class="fa fa-chevron-right mr-2"></span>New User</a></li>
-                            <li><a href="#"><span class="fa fa-chevron-right mr-2"></span>Help Center</a></li>
-                            <li><a href="#"><span class="fa fa-chevron-right mr-2"></span>Report Spam</a></li>
-                            <li><a href="#"><span class="fa fa-chevron-right mr-2"></span>Faq's</a></li>
-                        </ul>
-                    </div>
-                </div>
+
                 <div class="col-sm-12 col-md">
                     <div class="ftco-footer-widget mb-4">
                         <h2 class="ftco-heading-2">Have a Questions?</h2>
@@ -210,6 +191,15 @@
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
     <script src="{% static 'js/google-map.js' %}"></script>
     <script src="{% static 'js/main.js' %}"></script>
+
+    <script>
+        function scrollToDiv(event) {
+            event.preventDefault();
+
+            const targetDiv = document.getElementById('footer');
+            targetDiv.scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
 
 </body>
 

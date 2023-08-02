@@ -47,6 +47,8 @@ class Products(models.Model):
     color = models.CharField(max_length=100)
     qty = models.IntegerField()
     image = models.ImageField(upload_to="image")
+    image1 = models.ImageField(upload_to="image",null=True)
+    image2 = models.ImageField(upload_to="image",null=True)
     desc = models.CharField(max_length=300)
     status = models.CharField(max_length=100, default="Pending")
     artistId = models.ForeignKey(Artist, on_delete=models.CASCADE, null=True)

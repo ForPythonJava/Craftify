@@ -32,6 +32,8 @@ def logout(request):
 def index(request):
     return render(request, "index.html")
 
+def about(request):
+    return render(request,"COMMON/about.html")
 
 def contact(request):
     return render(request, "contact.html")
@@ -249,6 +251,8 @@ def addItems(request):
         "Clothing and Accessories",
         "Beauty and Personal Care",
         "Stationery and Paper Goods",
+        "Clay Pottery",
+        "Bottle Art"
     ]
     if request.POST:
         name = request.POST["pdtname"]
@@ -256,7 +260,7 @@ def addItems(request):
         price = request.POST["price"]
         color = request.POST["color"]
         qty = request.POST["qty"]
-        image = request.FILES["image"]
+        images = request.FILES.getlist("image")
         desc = request.POST["desc"]
         addItems = Products.objects.create(
             name=name,
@@ -264,7 +268,9 @@ def addItems(request):
             price=price,
             color=color,
             qty=qty,
-            image=image,
+            image=images[0],
+            image1=images[1],
+            image2=images[2],
             desc=desc,
             artistId=uid,
         )
@@ -373,7 +379,7 @@ def approveProduct(request):
     return redirect("/adminViewProducts")
 
 
-def deleteProduct(request):
+def admindeleteProduct(request):
     id = request.GET["id"]
     deletePdt = Products.objects.filter(id=id).delete()
     return redirect("/adminViewProducts")
@@ -385,7 +391,7 @@ def userHome(request):
     matching_categories = Cart.objects.filter(uid__loginid=uid).values_list('pid__category', flat=True).distinct()
     print(matching_categories)
 
-    common_products = Products.objects.filter(category__in=matching_categories)
+    common_products = Products.objects.filter(Q(category__in=matching_categories)&Q(status="Approved"))
     return render(request, "USER/userHome.html",{"common_products":common_products})
 
 
@@ -565,6 +571,46 @@ def addAddress(request):
                 updateStatus = Cart.objects.filter(id=i).update(name=name,email=email,state=state,pincode=pincode,address=address)
             return redirect("/checkOut")
     return render(request,"USER/addAddress.html")
+
+
+def viewProductCategory(request):
+    category=request.GET['category']
+    productData=Products.objects.filter(category=category)
+    print(productData)
+    return render(request,"USER/viewProductCategory.html",{"productData":productData})
+
+def userProfile(request):
+    uid=request.session['uid']
+    userData=User.objects.get(loginid__id=uid)
+    print(userData)
+    return render(request,"USER/userProfile.html",{"myProfile":userData})
+
+def profileUpdate(request):
+    uid=request.session['uid']
+    userData=User.objects.get(loginid__id=uid)
+    print(userData)
+    if request.POST:
+        name = request.POST["name"]
+        email = request.POST["email"]
+        phone = request.POST["phone"]
+        password = request.POST["password"]
+        address = request.POST["address"]
+        updateUser=User.objects.filter(loginid__id=uid).update(name=name,email=email,phone=phone,address=address)
+
+        updateLogin = Login.objects.get(id=uid)
+        updateLogin.username = email
+        updateLogin.set_password(password)
+        updateLogin.viewPass = password
+        updateLogin.save()
+        messages.success(request, "Profile Updated")
+        return redirect("/userProfile")
+    return render(request,"USER/profileUpdate.html",{"myProfile":userData})
+
+
+def productView(request):
+    pid=request.GET['id']
+    pdtData=Products.objects.get(id=pid)
+    return render(request,"USER/productView.html",{"pdtData":pdtData})
 
 ########################################### Chat Section###########################################
 

@@ -22,6 +22,7 @@
     <link rel="stylesheet" href="{% static 'css/flaticon.css' %}">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
+
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
         <div class="container">
@@ -75,6 +76,7 @@
                     <li class="nav-item"><a href="/signin" class="nav-link">Login</a></li>
                     <li class="nav-item"><a href="/userRegister" class="nav-link">USER</a></li>
                     <li class="nav-item"><a href="/artistRegister" class="nav-link">ARTIST</a></li>
+                    <li class="nav-item"><a href="/about" class="nav-link">ABOUT</a></li>
                     <!-- <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-toggle="dropdown"
                             aria-haspopup="true" aria-expanded="false">Products</a>
@@ -99,12 +101,12 @@
     {% endblock %}
 
 
-    <footer class="ftco-footer">
+    <footer class="ftco-footer" id="footer">
         <div class="container">
             <div class="row mb-5">
                 <div class="col-sm-12 col-md">
                     <div class="ftco-footer-widget mb-4">
-                        <h2 class="ftco-heading-2 logo"><a href="#">CRAFTIFY</a></h2>
+                        <h2 class="ftco-heading-2 logo"><a href="#">Craftify </a></h2>
                         <p>Far far away, behind the word mountains, far from the countries.</p>
                         <ul class="ftco-footer-social list-unstyled mt-2">
                             <li class="ftco-animate"><a href="#"><span class="fa fa-twitter"></span></a></li>
@@ -117,35 +119,13 @@
                     <div class="ftco-footer-widget mb-4 ml-md-4">
                         <h2 class="ftco-heading-2">My Accounts</h2>
                         <ul class="list-unstyled">
-                            <li><a href="#"><span class="fa fa-chevron-right mr-2"></span>My Account</a></li>
-                            <li><a href="#"><span class="fa fa-chevron-right mr-2"></span>Register</a></li>
-                            <li><a href="#"><span class="fa fa-chevron-right mr-2"></span>Log In</a></li>
-                            <li><a href="#"><span class="fa fa-chevron-right mr-2"></span>My Order</a></li>
+                            <li><a href="/artistRegister"><span class="fa fa-chevron-right mr-2"></span>Artist</a></li>
+                            <li><a href="/userRegister"><span class="fa fa-chevron-right mr-2"></span>User</a></li>
+                            <li><a href="/login"><span class="fa fa-chevron-right mr-2"></span>Log In</a></li>
                         </ul>
                     </div>
                 </div>
-                <div class="col-sm-12 col-md">
-                    <div class="ftco-footer-widget mb-4 ml-md-4">
-                        <h2 class="ftco-heading-2">Information</h2>
-                        <ul class="list-unstyled">
-                            <li><a href="#"><span class="fa fa-chevron-right mr-2"></span>About us</a></li>
-                            <li><a href="#"><span class="fa fa-chevron-right mr-2"></span>Catalog</a></li>
-                            <li><a href="#"><span class="fa fa-chevron-right mr-2"></span>Contact us</a></li>
-                            <li><a href="#"><span class="fa fa-chevron-right mr-2"></span>Term &amp; Conditions</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-sm-12 col-md">
-                    <div class="ftco-footer-widget mb-4">
-                        <h2 class="ftco-heading-2">Quick Link</h2>
-                        <ul class="list-unstyled">
-                            <li><a href="#"><span class="fa fa-chevron-right mr-2"></span>New User</a></li>
-                            <li><a href="#"><span class="fa fa-chevron-right mr-2"></span>Help Center</a></li>
-                            <li><a href="#"><span class="fa fa-chevron-right mr-2"></span>Report Spam</a></li>
-                            <li><a href="#"><span class="fa fa-chevron-right mr-2"></span>Faq's</a></li>
-                        </ul>
-                    </div>
-                </div>
+
                 <div class="col-sm-12 col-md">
                     <div class="ftco-footer-widget mb-4">
                         <h2 class="ftco-heading-2">Have a Questions?</h2>

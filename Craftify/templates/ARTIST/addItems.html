@@ -33,14 +33,14 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label class="label" for="email">Product Name</label>
-                                                <input type="text" class="form-control" pattern="[a-z A-Z]+" name="pdtname" id="email"
-                                                    placeholder="Name">
+                                                <input type="text" class="form-control" pattern="[a-z A-Z]+"
+                                                    name="pdtname" id="email" placeholder="Name" required>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label class="label" for="email">Category</label>
-                                                <select name="category" id="" class="form-control">
+                                                <select name="category" id="" class="form-control" required>
                                                     <option selected disabled>Choose Category</option>
                                                     {% for i in options %}
                                                     <option value="{{i}}">{{i}}</option>
@@ -52,34 +52,35 @@
                                             <div class="form-group">
                                                 <label class="label" for="email">Price</label>
                                                 <input type="text" class="form-control" pattern="[0-9]+" name="price"
-                                                    id="email" placeholder="Price">
+                                                    id="email" placeholder="Price" required>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label class="label" for="name">Color</label>
                                                 <input type="text" class="form-control" name="color" id="name"
-                                                    placeholder="Color">
+                                                    placeholder="Color" required>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label class="label" for="qty">Quantity</label>
                                                 <input type="text" class="form-control" pattern="[0-9]+" name="qty"
-                                                    id="qty" placeholder="Quantity">
+                                                    id="qty" placeholder="Quantity" required>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label class="label" for="name">Image</label>
-                                                <input type="file" class="form-control" name="image" id="name">
+                                                <label class="label" for="message">Images</label>
+                                                <input class="form-control" name="image" type="file"
+                                                    id="formFileMultiple" accept="image/*" multiple required>
                                             </div>
                                         </div>
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label class="label" for="message">Description</label>
                                                 <textarea name="desc" class="form-control" id="message" cols="30"
-                                                    rows="4" placeholder="Description"></textarea>
+                                                    rows="4" placeholder="Description" required></textarea>
                                             </div>
                                         </div>
                                         <div class="col-md-12">
@@ -88,7 +89,7 @@
                                                 <div class="submitting"></div>
                                             </div>
                                         </div>
-                                        
+
                                     </div>
                                 </form>
                             </div>
@@ -102,6 +103,36 @@
         </div>
     </div>
 </section>
+
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://cdn.rawgit.com/harvesthq/chosen/gh-pages/chosen.jquery.min.js"></script>
+<link href="https://cdn.rawgit.com/harvesthq/chosen/gh-pages/chosen.min.css" rel="stylesheet" />
+
+<script>
+    $(".chosen-select").chosen({
+        no_results_text: "Oops, nothing found!"
+    });
+
+    $(function () {
+        $("input[type='submit']").click(function (event) {
+            var $fileUpload = $("input[type='file']");
+            if (parseInt($fileUpload.get(0).files.length) > 3) {
+                alert("You can only upload a maximum of 3 files");
+                event.preventDefault(); // Prevent form submission
+            }
+        });
+
+        $("input[type='file']").change(function () {
+            var $fileUpload = $(this);
+            if (parseInt($fileUpload.get(0).files.length) > 3) {
+                alert("You can only select a maximum of 3 files");
+                $fileUpload.val(""); // Reset the file input to clear selected files
+            }
+        });
+    });
+</script>
 
 
 {% endblock %}

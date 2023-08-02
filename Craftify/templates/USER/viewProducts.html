@@ -51,7 +51,9 @@
                     <div class="img d-flex align-items-center justify-content-center"
                         style="background-image: url(../static/media/{{i.image}});">
                         <div class="desc">
+
                             {% if i.qty > 0 %}
+
                             {% if wishListData %}
                             <p class="meta-prod d-flex">
                                 {% if i.id in wishListData %}
@@ -65,11 +67,19 @@
                                 {% endif %}
                             </p>
                             {% else %}
-                            <p class="meta-prod d-flex">
-                                <a href="/addToWishList?id={{i.id}}"
-                                    class="d-flex align-items-center justify-content-center"><span
-                                        class="flaticon-heart"></span></a>
-                            </p>
+                            <div style="display: flex;">
+                                <p class="meta-prod d-flex">
+                                    <a href="/productView?id={{i.id}}"
+                                        class="d-flex align-items-center justify-content-center"><img
+                                            src="/static/images/vision.png" alt=""></a>
+                                </p>
+                                <p class="meta-prod d-flex">
+                                    <a href="/addToWishList?id={{i.id}}"
+                                        class="d-flex align-items-center justify-content-center"><span
+                                            class="flaticon-heart"></span></a>
+                                </p>
+
+                            </div>
                             {% endif %}
                             {% else %}
                             <h3 class="text-danger">OUT OF STOCK</h3>

@@ -62,7 +62,7 @@
                         <p class="mb-0"><span class="price">Stock : {{i.qty}}</span></p>
                         {% if i.status == "Pending" %}
                         <a href="/approveProduct?id={{i.id}}" class="btn btn-success">Approve</a>
-                        <a href="/deleteProduct?id={{i.id}}"
+                        <a href="/admindeleteProduct?id={{i.id}}"
                             class="btn btn-outline-danger">&nbsp;&nbsp;Delete&nbsp;&nbsp;</a>
                         {% endif %}
                     </div>
