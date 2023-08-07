@@ -365,7 +365,8 @@ def manageRequest(request):
 
 
 def adminHome(request):
-    return render(request, "ADMIN/adminHome.html")
+    pdtData=Products.objects.all().order_by('-id')[:4]
+    return render(request, "ADMIN/adminHome.html",{"pdtData":pdtData})
 
 
 def adminViewProducts(request):
